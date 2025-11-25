@@ -64,13 +64,13 @@ export class InboxService implements OnModuleInit {
     return inboxes;
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.redisService.get<Inbox>(
       `${this.INBOX_PREFIX}${id}`
     );
   }
 
-  async update(id: number, updateInboxDto: UpdateInboxDto) {
+  async update(id: string, updateInboxDto: UpdateInboxDto) {
     const existingInbox = await this.findOne(id);
 
     if (existingInbox) {
@@ -90,7 +90,7 @@ export class InboxService implements OnModuleInit {
     return null;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const existingInbox = await this.findOne(id);
 
     if (existingInbox) {

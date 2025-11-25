@@ -19,16 +19,16 @@ export class InboxController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.inboxService.findOne(+id);
+    return this.inboxService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInboxDto: UpdateInboxDto) {
-    return this.inboxService.update(+id, updateInboxDto);
+    return this.inboxService.update(id, updateInboxDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.inboxService.remove(+id);
+    return this.inboxService.remove(id);
   }
 }
