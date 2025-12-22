@@ -19,9 +19,9 @@ export class InboxService implements OnModuleInit {
     const existingInboxes = await this.findAll();
     if (existingInboxes.length === 0) {
       const defaultInbox: Inbox = {
-        id: '1',
+        id: '1e4145ed-d5f7-44f3-b484-b2e0dbab5a53',
         listing: 'listing',
-        participants: ['1e4145ed-d5f7-44f3-b484-b2e0dbab5a53'],
+        participants: ['host-user-id', 'guest-user-id'],
         subject: 'subject',
       };
       await this.create(defaultInbox);
