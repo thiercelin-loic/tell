@@ -1,36 +1,13 @@
-# Build stage
-FROM node:20-alpine AS builder
-
+FROM node:lts-trixie-slim AS builder
 WORKDIR /usr/src/app
-
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy source code
+RUN npm ci --verbose
 COPY . .
-
-# Build the application
-RUN npm run build
-
-# Production stage
-FROM node:20-alpine
-
+RUN npm run build --verbose
+FROM node:lts-trixie-slim
 WORKDIR /usr/src/app
-
-# Copy package files
 COPY package*.json ./
-
-# Install only production dependencies
 RUN npm ci --only=production
-
-# Copy built application from builder stage
 COPY --from=builder /usr/src/app/dist ./dist
-
-# Expose the port
 EXPOSE 3000
-
-# Start the application
 CMD ["node", "dist/main"]
