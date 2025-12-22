@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:7-alpine
+    image: redis:alpine
     container_name: tell.database
     ports:
       - "6379:6379"
@@ -15,6 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     container_name: tell.api
     ports:
       - "3003:3000"
@@ -26,9 +27,6 @@ services:
     depends_on:
       - redis
     restart: unless-stopped
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
     networks:
       - parisworkhub
 
