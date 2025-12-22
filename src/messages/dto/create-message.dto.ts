@@ -1,9 +1,10 @@
+export class MessageItemDto {
+  sender: string;
+  content: string;
+  timestamp: Date;
+}
+
 export class CreateMessageDto {
   id: string;
-  timestamp: Date;
-  subject: string;
-  sender: string;
-  recipient: string;
-  ping: string[];
-  pong: string[];
+  messages: MessageItemDto[];
 }

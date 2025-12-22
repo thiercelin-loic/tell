@@ -20,12 +20,28 @@ export class MessagesService implements OnModuleInit {
     if (existingMessages.length === 0) {
       const defaultMessage: Message = {
         id: '1e4145ed-d5f7-44f3-b484-b2e0dbab5a53',
-        timestamp: new Date(),
-        subject: 'Subject',
-        sender: 'Sender',
-        recipient: 'Recipient',
-        ping: ['Hi', 'What your want ?'],
-        pong: ['Hi', 'I need help !']
+        messages: [
+          {
+            sender: 'host-user-id', // Replace with actual host ID if known, or generic
+            content: 'Hi',
+            timestamp: new Date()
+          },
+          {
+            sender: 'guest-user-id', // Replace with actual guest ID
+            content: 'Hi',
+            timestamp: new Date()
+          },
+          {
+            sender: 'host-user-id',
+            content: 'What your want ?',
+            timestamp: new Date()
+          },
+          {
+            sender: 'guest-user-id',
+            content: 'I need help !',
+            timestamp: new Date()
+          }
+        ]
       };
       await this.create(defaultMessage);
     }
@@ -34,7 +50,6 @@ export class MessagesService implements OnModuleInit {
   async create(createMessageDto: CreateMessageDto) {
     const newMessage: Message = {
       ...createMessageDto,
-      timestamp: new Date()
     };
     
     // Store individual message
@@ -79,8 +94,10 @@ export class MessagesService implements OnModuleInit {
     if (existingMessage) {
       const updatedMessage: Message = {
         ...existingMessage,
-        ...updateMessageDto,
-        timestamp: new Date()
+        messages: [
+          ...existingMessage.messages,
+          ...(updateMessageDto.messages || [])
+        ]
       };
       
       await this.redisService.set(
